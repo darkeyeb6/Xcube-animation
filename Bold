@@ -1,0 +1,29 @@
+local plr = game.Players.LocalPlayer
+
+local function StopAnim()
+    for _, track in pairs(plr.Character.Humanoid:GetPlayingAnimationTracks()) do
+        track:Stop()
+    end
+end
+
+local function changeIdleAnimation()
+    local Animate = plr.Character:FindFirstChild("Animate")
+    if Animate then
+        Animate.Disabled = true
+        StopAnim()
+        Animate.idle.Animation1.AnimationId = "rbxassetid://16738333868"
+        Animate.idle.Animation2.AnimationId = "rbxassetid://16738334710"
+        Animate.Disabled = false
+    end
+end
+
+local function onCharacterAdded(character)
+    repeat wait() until character:FindFirstChild("Humanoid")
+    changeIdleAnimation()
+end
+
+plr.CharacterAdded:Connect(onCharacterAdded)
+
+if plr.Character then
+    onCharacterAdded(plr.Character)
+end
