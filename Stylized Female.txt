@@ -1,37 +1,29 @@
 local plr = game.Players.LocalPlayer
 
--- Function to stop animations
 local function StopAnim()
     for _, track in pairs(plr.Character.Humanoid:GetPlayingAnimationTracks()) do
         track:Stop()
     end
 end
 
--- Function to change the idle animations
-local function changeIdleAnimation(idle1, idle2)
+local function changeIdleAnimation()
     local Animate = plr.Character:FindFirstChild("Animate")
     if Animate then
         Animate.Disabled = true
         StopAnim()
-        Animate.idle.Animation1.AnimationId = idle1
-        Animate.idle.Animation2.AnimationId = idle2
+        Animate.idle.Animation1.AnimationId = "rbxassetid://4708191566"
+        Animate.idle.Animation2.AnimationId = "rbxassetid://4708192150""
         Animate.Disabled = false
     end
 end
 
--- Function to handle character respawn or reset
 local function onCharacterAdded(character)
-    -- Wait for the humanoid to load
     repeat wait() until character:FindFirstChild("Humanoid")
-
-    -- Apply the custom idle animations
-    changeIdleAnimation("rbxassetid://4708191566", "rbxassetid://4708192150")
+    changeIdleAnimation()
 end
 
--- Listen for character respawn or reset
 plr.CharacterAdded:Connect(onCharacterAdded)
 
--- If the character already exists, apply the animation immediately
 if plr.Character then
     onCharacterAdded(plr.Character)
 end
